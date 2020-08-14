@@ -1,0 +1,33 @@
+/etc/httpd/conf/httpd.confを下記のように書き換えます。
+#以下をコメントアウト
+#ErrorLog logs/error_log
+#以下を追記
+ErrorLog "|/usr/sbin/rotatelogs /var/log/httpd/error_log.%Y-%m-%d 86400 540"
+
+〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜
+
+# 以下をコメントアウト
+#CustomLog logs/access_log combined
+# 以下を追記
+CustomLog "|/usr/sbin/rotatelogs /var/log/httpd/access_log.%Y%m%d 86400 540" combined
+#
+
+# make script files for accesslog
+# make script files for errorlog
+see and put .sh files on vhosts folder.
+
+# put aside default files for logrotate
+sudo mv /etc/logrotate.d/httpd /etc/logrotate.d/httpd.default
+
+# change persimssion
+sudo chmod +x rm_rotatelogs_errorlog.sh
+sudo chmod +x rm_rotatelogs_accesslog.sh
+
+# rotate log
+crontab -e
+
+# rotate access log
+0 0 * * * /var/log/httpd/rm_rotatelogs_accesslog.sh
+# rotate error log
+0 0 * * * /var/log/httpd/rm_rotatelogs_errorlog.sh
+~                                                                                                                                                            ~                                                                                                                                                            ~                                                                
