@@ -1,0 +1,4 @@
+# move to the path where is shellscript
+cd /opt/backlog/httpd/logs
+# filter access_log, remove logs over 30 days
+find ./ -name 'access_log.*' -mtime +30 -exec rm -f {} \;
