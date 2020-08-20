@@ -1,0 +1,22 @@
+
+# contactform
+<VirtualHost 192.168.33.10:80>
+
+    ServerName dev.contactform_05282020
+  # ServerAlias dev.contactform_05282020
+  # AddDefaultCharset UTF-8
+    DocumentRoot "/vagrant/"
+
+    <Directory "/vagrant/contactform_05282020">
+      AllowOverride none
+      Require all granted
+      Options FollowSymLinks
+    </Directory>
+
+  # <ifModule mod_rewrite.c>
+  #  RewriteEngine On
+  #  RewriteCond %{HTTP_HOST} ^www.nautilus.xyz
+  #  RewriteRule ^(.*)$ http://nautilus.xyz%{REQUEST_URI} [R=301,L]
+  #  </ifModule>
+
+</VirtualHost> 
