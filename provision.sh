@@ -1,15 +1,18 @@
 # Install Apache, Git, Unzip
 sudo yum -y install httpd zip unzip git vim
+sudo yum -y install kernel kernel-devel kernel-headers dkms gcc gcc-c++
 
 # Install PHP with Epel, Remi repository
 sudo yum -y install epel-release
 sudo yum -y install http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
-sudo yum update
 sudo yum -y install --enablerepo=remi,remi-php73 php php-devel php-mbstring php-pdo php-gd php-xml php-mcrypt
 
 # Install MySQL
 sudo yum -y install http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
 sudo yum -y install mysql-community-server
+
+# updates all as yes
+sudo yum update -y
 
 # Download Composer, Change its directory to the below bin
 curl -sS https://getcomposer.org/installer | php

@@ -1,0 +1,53 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+    # Server 1
+    config.vm.define "dev.contactform" do |server|
+        # Set Vagrant's Box, URL, Hostname, Network
+        config.vm.box = "centos/7"
+  
+        # config.vm.box_url = "https://app.vagrantup.com/centos/boxes/7"
+        config.vm.hostname = "dev.contactform"
+        config.vm.network "private_network", ip: "192.168.33.10"
+
+        #1 Install provision #2 Install settings for vi(vim)
+        config.vm.provision :shell, :path => "provision.sh"
+#       config.vm.provision :shell, :path => "vimrc.sh"
+        config.vm.synced_folder "./", "/vagrant", :mount_options => ["dmode=777", "fmode=777"]
+        config.vm.network :forwarded_port, guest: 22, host: 2222, id: 'ssh', auto_correct: true
+#       config.vm.box_check_update = false
+    end
+
+    # Server 2
+    config.vm.define "dev.messageboard" do |server|
+        # Set Vagrant's Box, URL, Hostname, Network
+        config.vm.box = "centos/7"
+
+        # config.vm.box_url = "https://app.vagrantup.com/centos/boxes/7"
+        config.vm.hostname = "dev.messageboard"
+        config.vm.network "private_network", ip: "192.168.33.20"
+
+        #1 Install provision #2 Install settings for vi(vim)
+        config.vm.provision :shell, :path => "provision.sh"
+#       config.vm.provision :shell, :path => "vimrc.sh"
+        config.vm.synced_folder "./", "/vagrant", :mount_options => ["dmode=777", "fmode=777"]
+        config.vm.network :forwarded_port, guest: 22, host: 2222, id: 'ssh', auto_correct: true
+#       config.vm.box_check_update = false
+    end
+
+    # memory settings
+    config.vm.provider "virtualbox" do |vb|
+        # Display the VirtualBox GUI when booting the machine
+        vb.gui = false
+        # Customize the amount of memory on the VM:
+        vb.memory = "1024"
+    end
+
+    # For VirtualBox 5.1 packer bug
+    config.vm.provider "virtualbox" do |vb|
+        vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
+    end
+
+end
